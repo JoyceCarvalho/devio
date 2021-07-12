@@ -1,0 +1,209 @@
+/* your styles go here */
+.button-dev {
+    background: #A50DE0;
+    background-image: -webkit-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -moz-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -ms-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -o-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -webkit-gradient(to bottom, #A50DE0, #6F02F7);
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    height: 80%;
+    line-height: 80%;
+    color: #FFFFFF;
+    font-family: Helvetica;
+    width: 60%;
+    font-size: 48px;
+    font-weight: 300;
+    padding: 50px;
+    -webkit-box-shadow: 1px 1px 20px 0 #000000;
+    -moz-box-shadow: 1px 1px 20px 0 #000000;
+    box-shadow: 1px 1px 20px 0 #000000;
+    text-shadow: 1px 1px 20px #000000;
+    border: solid #690CF7 1px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+ }
+ 
+ .button-dev:hover {
+    border: solid #710CF7 1px;
+    background: #6F02F7;
+    background-image: -webkit-linear-gradient(top, #6F02F7, #A50DE0);
+    background-image: -moz-linear-gradient(top, #6F02F7, #A50DE0);
+    background-image: -ms-linear-gradient(top, #6F02F7, #A50DE0);
+    background-image: -o-linear-gradient(top, #6F02F7, #A50DE0);
+    background-image: -webkit-gradient(to bottom, #6F02F7, #A50DE0);
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    text-decoration: none;
+ }
+
+ .container-dev {
+    padding-top: 10%;
+    padding-left: 35%;
+    padding-right: 35%;
+ }
+
+ .row-dev {
+     padding: 2%;
+ }
+
+ /* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {
+    .button-dev{
+        font-size: 28px;
+    }
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    .button-dev{
+        font-size: 24px;
+    }
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+    .button-dev{
+        font-size: 24px;
+    }
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    .button-dev{
+        font-size: 19px;
+    }
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+    .button-dev{
+        font-size: 14px;
+    }
+}
+
+.toggle-flip input[type="checkbox"] {
+    display: none;
+  }
+  
+  .toggle-flip input[type="checkbox"] + .flip-indecator {
+    position: relative;
+    width: 70px;
+    height: 30px;
+    display: block;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    -webkit-perspective: 90px;
+            perspective: 90px;
+  }
+  
+  .toggle-flip input[type="checkbox"] + .flip-indecator:before, .toggle-flip input[type="checkbox"] + .flip-indecator:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    line-height: 30px;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    text-align: center;
+    border-radius: 3px;
+    -webkit-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
+  
+  .toggle-flip input[type="checkbox"] + .flip-indecator:before {
+    content: attr(data-toggle-off);
+    background-color: #ddd;
+  }
+  
+  .toggle-flip input[type="checkbox"] + .flip-indecator:after {
+    content: attr(data-toggle-on);
+    background-color: #A50DE0;
+    color: #fff;
+    -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+  }
+  
+  .toggle-flip input[type="checkbox"]:checked + .flip-indecator:before {
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+  }
+  
+  .toggle-flip input[type="checkbox"]:checked + .flip-indecator:after {
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+  }
+  
+  .toggle-flip input[type="checkbox"]:disabled + .flip-indecator {
+    cursor: not-allowed !important;
+    color: #ccc;
+  }
+
+  .row-line {
+      padding-top: 4%;
+  }
+
+  .cart-link {
+      text-decoration: none;
+      color: white;
+  }
+
+  .toggle-button{
+    background: #A50DE0;
+    background-image: -webkit-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -moz-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -ms-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -o-linear-gradient(top, #A50DE0, #6F02F7);
+    background-image: -webkit-gradient(to bottom, #A50DE0, #6F02F7);
+    display: flex;
+    position:absolute; 
+    height:10%; 
+    width:30%; 
+    color: white;
+    -webkit-box-shadow: 1px 1px 20px 0 #000000;
+    -moz-box-shadow: 1px 1px 20px 0 #000000;
+    box-shadow: 1px 1px 20px 0 #000000;
+    text-shadow: 1px 1px 20px #000000;
+    border: solid #710CF7 1px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20%;
+    padding: 2px;
+    top:-15%;
+    left:25%;
+  }
+
+  .button-cart {
+    width: 12px;
+    height: 60px;
+    border-radius: 50%;
+    background: #9055A2;
+    color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: absolute;
+    top: -15%;
+    right: 1%;
+  }
+
+  .img-mini{
+    width: 50px;
+    height: 50px;
+  }

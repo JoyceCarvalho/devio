@@ -1,0 +1,322 @@
+<nav class="navbar navbar-expand-md navbar">
+    <div class="container">
+        <a class="navbar-brand" href="index.html"><img src="/assets/img/devio_logo.jpg" alt="Devio" width="100"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#offers">Cardápio</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#menu">Meus pedidos</span></a>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary btn-number">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <a class="btn btn-success btn-sm ml-3" href="#pedido">
+                    <i class="fa fa-shopping-cart"></i> Cart
+                    <span class="badge badge-light"><?=(!empty($_SESSION["pedido"])) ? count($_SESSION["pedido"]) : "0"?></span>
+                </a>
+            </form>
+            <a href="/logout" class="btn navbar-btn btn-unique d-none d-lg-inline-block">Sair</a>
+        </div>
+    </div>
+</nav>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Meu pedido</h1>
+     </div>
+</section>
+
+<?php 
+if(!empty($_GET['mens'])){
+  if($_GET["mens"] == "success"){
+    ?>
+    <div class="alert alert-success" role="alert">
+      Pedido realizado com sucesso!
+    </div>
+    <?php
+  } else {
+    ?>
+    <div class="alert alert-danger" role="alert">
+      Opss! Ocorreu algum problema ao cadastrar seu pedido!
+    </div>
+    <?php
+  }
+}
+?>
+
+<div id="pedido" class="container mb-4">
+    <div class="row">
+      <form class="form col-12" action="\fazer_pedido" method="post">
+        <div class="col-12">
+            <div class="table-responsive">
+                <?php 
+                if(!empty($_SESSION["pedido"])){
+                    ?>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col"> </th>
+                                <th scope="col">Prato</th>
+                                <th scope="col" class="text-center">Quantidade</th>
+                                <th scope="col" class="text-right">Preço</th>
+                                <th> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($_SESSION['pedido'] as $prato) {
+                                ?>
+                                <tr>
+                                    <td>
+                                        <img class="img-mini" src="/assets/img/pratos/<?=$prato["imagem_prato"]?>" /> 
+                                    </td>
+                                    <td>
+                                        <?=$prato["nome_prato"];?>
+                                        <input type="hidden" name="idprato[<?=$prato['idcardapio']?>]" id="idprato" value="<?=$prato['idprato']?>">
+                                        <input type="hidden" name="idcardapio[<?=$prato['idcardapio']?>]" id="idcardapio" value="<?=$prato['idcardapio']?>">
+                                        <input type="hidden" name="nomeprato_<?=$prato['idcardapio']?>" id="nome_prato_<?=$prato['idcardapio']?>" value="<?=$prato['nome_prato']?>">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="text" id="quantidade_<?=$prato["idcardapio"]?>" name="quantidade[<?=$prato["idcardapio"]?>]" value="1" /></td>
+                                    <td class="text-right">
+                                        <?="R$ ".str_replace(".", ",", $prato["preco_prato"]);?>
+                                        <input type="hidden" name="preco_<?=$prato["idcardapio"]?>" id="preco_<?=$prato["idcardapio"]?>" value="<?=$prato["preco_prato"]?>">
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="btn btn-sm btn-danger" id="delete_<?=$prato["idcardapio"];?>" ><i class="fa fa-trash cart-link"></i> </a> 
+                                    </td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td class="text-right">
+                                    <strong>R$ <span id="total">0</span></strong>
+                                    <input type="hidden" id="total_aux" value="0">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php
+                } else {
+                    ?>
+                    <h2>Nenhum pedido não finalizado</h2>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+        <?php 
+        if(!empty($_SESSION["pedido"])){
+            ?>
+            <div class="col mb-2">
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <a href="#offers" class="btn btn-block btn-light">Continuar Comprando</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit">Finalizar pedido</button>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+        </form>
+    </div>
+</div>
+<!-- Offers Section-->
+<section id="offers" class="offers">
+    <div class="container text-center">
+        <header>
+            <h2>Cardápio</h2>
+            <h3>Faça o seu pedido   </h3>
+        </header>
+        <?php
+        $item = 1;
+        foreach ($this->view->dados as $prato) {
+            
+            if($item == 1){
+                $item++;
+                $itens = 1;
+                echo "<div class='row'>";
+            }
+            if($itens > 3){
+                $itens = 1;
+                echo "<div class='row row-line'>";
+            } 
+            ?>
+            <div class="col-md-4 mb-5 mb-lg-0">
+                <div class="item">
+                    <div id="descricao_<?=$prato->idcardapio?>" class="toggle-button" style="display: none;">Fazer pedido!</div>
+                    <form action="/add_carrinho" method="post">
+                        <input type="hidden" name="prato" value="<?=$prato->idcardapio?>">
+                        <button type="submit" class="button-cart" onmouseover="getElementById('descricao_<?=$prato->idcardapio?>').style.display='block'" onmouseout="getElementById('descricao_<?=$prato->idcardapio?>').style.display='none'" ><i class="icon-cart-1"></i></button>
+                    </form>
+                    <div class="profile"><img src="/assets/img/pratos/<?=$prato->imagem_prato?>" alt="Prato" class="img-responsive"></div>
+                    <div class="text">
+                        <h4><?=$prato->nome_prato?></h4>
+                        <p class="after text-primary text-large"><?="R$ ".str_replace(".",",", $prato->preco_prato)?></p>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $itens++;
+            if($itens > 3){
+                echo "</div>";
+            }
+
+        }
+        ?>
+    </div>
+</section>
+<!-- End Offers Section-->
+<!-- Menu Section-->
+<section id="menu" class="menu">
+      <div class="container">
+        <header class="text-center">
+          <h2>Meus Pedidos</h2>
+          <h3>Acompanhar seus pedidos!</h3>
+        </header>
+        <div class="menu">
+          <!-- Tabs Navigatin-->
+          <ul role="tablist" class="nav nav-tabs text-center has-border d-flex justify-content-center">
+            <li role="presentation" class="nav-item"><a href="#breakfast" aria-controls="meus_pedidos" role="tab" data-toggle="tab" class="nav-link active">Meus pedidos</a></li>
+          </ul>
+          <!-- Tab panes-->
+          <div class="tab-content">
+            <!-- Breakfast Panel-->
+            <div id="meus_pedidos" role="tabpanel" class="tab-pane active">
+              <div class="row">
+                <?php
+                if(!empty($this->view->pedidos)){
+                  foreach ($this->view->pedidos as $indice => $valor) {
+                    ?>
+                    <div class="col-lg-6">
+                    <div class="menu-item has-border clearfix <?=($valor["concluido"] == 1) ? "recommended" : ""?>">
+                      <div class="item-details pull-left">
+                        <h5>PED <?=$indice?></h5>
+                        <p>
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Prato</th>
+                                        <th>Quantidade</th>
+                                        <th>Preço</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    foreach ($valor["nome"] as $pedido) {
+                                        ?>      
+                                        <tr>
+                                            <?=$pedido?>
+                                        </tr>                      
+                                        <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </p>
+                      </div>
+                      <div class="item-price pull-right">
+                        <strong class="text-large text-primary">R$ <?=str_replace(".", ",", number_format($valor["total"], 2))?></strong>
+                        <?php 
+                        if($valor["concluido"] == 1){
+                          ?>
+                          <span class="text-medium">Concluído </span>
+                          <?php 
+                        }else{
+                          ?>
+                          <span class="text-medium">Em Andamento </span>
+                          <?php
+                        } 
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+                    <?php
+                  }
+                }
+                ?>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Menu Section-->
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+
+        $(function(){
+			
+            $.each($('input[id=idcardapio]'),function (){
+
+                var idcardapio = $(this).val();
+
+                var preco = parseFloat($("#preco_"+idcardapio).val());
+                var quantidade = parseFloat($("#quantidade_"+idcardapio).val());
+                var total = parseFloat($("#total_aux").val());
+
+                total = (preco*quantidade)+total;
+                $("#total_aux").val(total);
+
+                total = total.toFixed(2)
+                total = total.toString();
+                total = total.replace(".", ",");
+
+                $("#total").html(total);
+
+                var quantidade_inicial = quantidade;
+
+                $('#quantidade_'+idcardapio).blur(function() {
+
+                    var preco = parseFloat($("#preco_"+idcardapio).val());
+                    var quantidade = parseFloat($("#quantidade_"+idcardapio).val());
+                    var total = parseFloat($("#total_aux").val());
+
+                    quantidade = quantidade - quantidade_inicial;
+                    total = (preco*quantidade)+total;
+                    $("#total_aux").val(total);
+
+                    total = total.toFixed(2)
+                    total = total.toString();
+                    total = total.replace(".", ",");
+
+                    $("#total").html(total);
+
+                });
+
+                $('#delete_'+idcardapio).on('click', function(){
+
+                    var nome_prato = $('#nome_prato_'+idcardapio).val();
+                    console.log(nome_prato);  
+                    $.post('/atualizar_pedido', {nomeprato: nome_prato}, function(resp){
+                        console.log(resp);
+                        window.location=window.location;
+                    });
+
+                });
+
+            });
+
+        });
+        
+    });
+</script>

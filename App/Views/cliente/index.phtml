@@ -1,0 +1,144 @@
+<div class="page-holder">
+    <!-- navbar-->
+    <header class="header">
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container"><a href="#" class="navbar-brand"> <img src="/assets/img/devio_logo.jpg" alt="Devio" width="100"></a>
+        <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right">Menu<i class="fa fa-align-justify"></i></button>
+        <div id="navbarSupportedContent" class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="#offers" class="nav-link link-scroll">Cardápio</a></li>
+            </ul>
+            <?php
+            if(empty($_SESSION["idusuario"])){
+                ?>
+                <a href="/cliente_login" class="btn navbar-btn btn-unique d-none d-lg-inline-block">Acessar minha conta</a>
+                <?php
+            } else {
+                ?>
+                <a href="/logout" class="btn navbar-btn btn-unique d-none d-lg-inline-block">Sair</a>
+                <?php
+            }
+            ?>
+        </div>
+        </div>
+    </nav>
+    </header>
+    <!-- End Navbar-->
+</div>
+<!-- Hero Section-->
+<section id="hero" class="hero">
+    <div id="slider" class="sl-slider-wrapper">
+    <div class="sl-slider">
+        <!-- slide-->
+        <div data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2" class="sl-slide bg-1">
+        <div style="background-image: url(/assets/img/hero-bg.jpg);" class="sl-slide-inner">
+            <div class="container">
+            <h2>Bem-vindos ao melhor</h2>
+            <h1><span class="text-primary">Restaurante</span></h1>
+            </div>
+        </div>
+        </div>
+        <!-- slide-->
+        <div data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5" class="sl-slide bg-2">
+        <div style="background-image: url(/assets/img/hero-bg02.jpg);" class="sl-slide-inner">
+            <div class="container">
+            <h1>Conheça nosso pratos!</h1>
+            </div>
+        </div>
+        </div>
+        <!-- slide-->
+        <div data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1" class="sl-slide bg-3">
+        <div style="background-image: url(/assets/img/hero-bg03.jpg);" class="sl-slide-inner">
+            <div class="container">
+            <h2>Visite-<span class="text-primary">nos</span></h2>
+            <br>
+            <p>Será um imenso prazer atendê-lo!</p>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- End sl-slider-->
+    <!-- slider pagination-->
+    <nav id="nav-dots" class="nav-dots"><span class="nav-dot-current"></span><span></span><span></span></nav>
+    <!-- scroll down btn--><a id="scroll-down" href="#about" class="hidden-xs"></a>
+    <!-- social icons menu-->
+    <div class="social">
+        <div class="wrapper">
+        <ul class="list-unstyled">
+            <li><a href="#" title="facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#" title="twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" title="instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
+        </ul><span>Siga-nos</span>
+        </div>
+    </div>
+    </div>
+    <!-- End slider-wrapper-->
+</section>
+<!-- End Hero Section-->
+
+<!-- Details-->
+<section id="details" class="details">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+        <div class="heading text-center">
+            <p>Contate-nos</p>
+            <h5>Home Delivery</h5>
+        </div>
+        </div>
+        <div class="col-lg-6">
+        <div class="heading text-center">
+            <h5>Conheça nosso Cardápio</h5>
+        </div><a href="#offers" class="reviews has-border"><i class="fa fa-angle-right"></i></a>
+        </div>
+    </div>
+    </div>
+</section>
+<!-- End Details-->
+
+<!-- Offers Section-->
+<section id="offers" class="offers">
+    <div class="container text-center">
+        <header>
+            <h2>Cardápio</h2>
+            <h3>Faça o seu pedido   </h3>
+        </header>
+        <?php
+        $item = 1;
+        foreach ($this->view->dados as $prato) {
+            
+            if($item == 1){
+                $item++;
+                $itens = 1;
+                echo "<div class='row'>";
+            }
+            if($itens > 3){
+                $itens = 1;
+                echo "<div class='row row-line'>";
+            } 
+            ?>
+            <div class="col-md-4 mb-5 mb-lg-0">
+                <div class="item">
+                    <div id="descricao_<?=$prato->idcardapio?>" class="toggle-button" style="display: none;">Fazer pedido!</div>
+                    <form action="/add_carrinho" method="post">
+                        <input type="hidden" name="prato" value="<?=$prato->idcardapio?>">
+                        <button type="submit" class="button-cart" onmouseover="getElementById('descricao_<?=$prato->idcardapio?>').style.display='block'" onmouseout="getElementById('descricao_<?=$prato->idcardapio?>').style.display='none'" ><i class="icon-cart-1"></i></button>
+                    </form>
+                    <div class="profile"><img src="/assets/img/pratos/<?=$prato->imagem_prato?>" alt="Prato" class="img-responsive"></div>
+                    <div class="text">
+                        <h4><?=$prato->nome_prato?></h4>
+                        <p class="after text-primary text-large"><?="R$ ".str_replace(".",",", $prato->preco_prato)?></p>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $itens++;
+            if($itens > 3){
+                echo "</div>";
+            }
+
+        }
+        ?>
+    </div>
+</section>
+<!-- End Offers Section-->

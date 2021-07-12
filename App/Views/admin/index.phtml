@@ -1,0 +1,109 @@
+<!-- Menu Section-->
+<section id="menu" class="menu">
+    <div class="container">
+        <header class="text-center">
+            <h2>Pratos</h2>
+            <h3>Adicionar ao cardápio</h3>
+        </header>
+        <div class="menu">
+            <!-- Tabs Navigatin-->
+            <ul role="tablist" class="nav nav-tabs text-center has-border d-flex justify-content-center">
+                <li role="presentation" class="nav-item"><a href="#dishes" aria-controls="dishes" role="tab" data-toggle="tab" class="nav-link">Pratos</a></li>
+            </ul>
+            <!-- Tab panes-->
+            <div class="tab-content">
+            <!-- dishes Panel-->
+            <div id="dishes" role="tabpanel" class="tab-pane active">
+                <div class="row">
+                    <?php foreach($this->view->dados as $pratos): ?>
+                        <div class="col-lg-6">
+                            <div class="menu-item has-border clearfix <?=($pratos->disponivel == 1) ? "recommended" : ""?>">
+                                <div class="item-details pull-left">
+                                    <h5><?=$pratos->nome_prato;?></h5>
+                                    <p><?=$pratos->descricao_prato;?></p>
+                                </div>
+                                <div class="item-price pull-right">
+                                    <strong class="text-large text-primary"><?="R$ ".str_replace(".", ",", $pratos->preco_prato)?></strong>
+                                    <div class="form-group">
+                                        <span class="text-medium">
+                                            <div class="toggle-flip">
+                                                <label>
+                                                    <input name="disponivel[<?=$pratos->idprato?>]" id="disponivel_<?=$pratos->idprato?>" class="disponivel_px" onclick="javascript:addPrato(<?=$pratos->idprato;?>, <?=$pratos->idcardapio;?>)" type="checkbox" <?=($pratos->disponivel == 1) ? "checked" : ""?>><span class="flip-indecator" data-toggle-on="SIM" data-toggle-off="NÃO"></span>
+                                                </label>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <!-- End dishes Panel-->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Menu Section-->
+<!-- Events Section-->
+<section id="events" class="events">
+    <div class="container">
+        <header class="text-center">
+            <h2>Comandas</h2>
+            <h3>Pedidos aguardando conclusão</h3>
+        </header>
+        <div class="row bg-white align-items-stretch">
+            <!-- Details Side-->
+            <?php
+            if(!empty($this->view->pedidos)){
+                foreach ($this->view->pedidos as $indice => $valor) {
+                    ?>
+                    <div class="col-lg-6">
+                        <div class="details-outer d-flex align-items-center">
+                            <div class="details">
+                            <h3>PED <?=$indice?> - </h3>
+                            <h4 class="text-primary">Cliente: <?=$valor["nome_cliente"]?></h4>
+                            <p class="lead">
+                                <table class="table table-resposive">
+                                    <thead>
+                                        <tr>
+                                            <th>Prato</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                        
+                                        <?php foreach($valor["nome"] as $pedido): ?>
+                                            <tr>
+                                                <?=$pedido?>
+                                            </tr>
+                                        <?php endforeach; ?>                                        
+                                    </tbody>
+                                </table>                                
+                            </p>
+                                <div class="pull-right">
+                                    <form action="/concluir" method="post">
+                                        <input type="hidden" name="pedido" value="<?=$valor["pedido"]?>">
+                                        <button class="btn-unique" type="submit">Concluído</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+    </div>
+</section>
+<!-- End Events Section-->
+<script>
+    function addPrato(idprato, cardapio = null){
+        $.post('add_cardapio', { prato: idprato, cardap: cardapio}, function(resp){
+            alert(resp);
+            //console.log(resp);
+            document.location.reload(true)
+        });
+    }
+</script>
